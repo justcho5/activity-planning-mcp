@@ -9,6 +9,18 @@ import httpx
 async def fetch_events_by_date(
     city: str, start_date: str, end_date: str, keyword: Optional[str] = None
 ) -> List[Event]:
+    """
+    Fetch events happening in a specific date range in a specific city.
+
+    Args:
+        city (str): The name of the city.
+        start_date (str): The start date in the format YYYY-MM-DD.
+        end_date (str): The end date in the format YYYY-MM-DD.
+        keyword (str, optional): An optional keyword to filter events (e.g., "concert", "sports", "theater").
+
+    Returns:
+        list: A list of events including venue, date, pricing, and genre.
+    """
     city = validate_location(city)
     if keyword:
         keyword = validate_keyword(keyword)
@@ -56,6 +68,10 @@ async def search_events(search: EventSearch):
 
 
 def parse_events_response(data: Dict[str, Any]) -> List[Event]:
+    """
+    Parse the response from the Ticketmaster API and return a list of Event objects.
+    """
+
     events = []
 
     if "_embedded" not in data or "events" not in data["_embedded"]:
