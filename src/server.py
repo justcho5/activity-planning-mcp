@@ -1,11 +1,8 @@
 from fastmcp import FastMCP, Client
-from functools import lru_cache
 from typing import Optional
-import asyncio
-from src.events import fetch_events_by_date
-from pprint import pprint
-from src.places import search_places as search_places_api
-from src.places import get_place_details as get_place_details_api
+from .events import fetch_events_by_date
+from .places import search_places as search_places_api
+from .places import get_place_details as get_place_details_api
 import urllib.parse
 
 mcp = FastMCP()

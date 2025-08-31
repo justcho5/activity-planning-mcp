@@ -2,9 +2,9 @@
 
 import httpx
 from typing import List, Optional, Dict, Any, Tuple
-from src.config import get_settings
-from src.models import Place, PlaceSearch
-from src.utils import (
+from .config import get_settings
+from .models import Place, PlaceSearch
+from .utils import (
     format_coordinates,
     is_coordinates,
 )
