@@ -1,8 +1,8 @@
-from .config import get_settings
-from .utils import validate_location, validate_keyword, validate_start_end_dates
+from src.config import get_settings
+from src.utils import validate_location, validate_keyword, validate_start_end_dates
 from datetime import datetime
 from typing import Optional, Dict, Any, List
-from .models import EventSearch, Event
+from src.models import EventSearch, Event
 import httpx
 
 

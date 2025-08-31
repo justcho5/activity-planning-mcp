@@ -1,8 +1,8 @@
 from fastmcp import FastMCP, Client
 from typing import Optional
-from .events import fetch_events_by_date
-from .places import search_places as search_places_api
-from .places import get_place_details as get_place_details_api
+from src.events import fetch_events_by_date
+from src.places import search_places as search_places_api
+from src.places import get_place_details as get_place_details_api
 import urllib.parse
 
 mcp = FastMCP()
@@ -97,6 +97,10 @@ def make_gcal_url(title: str, start_iso: str, end_iso: str, location: str = "") 
 @mcp.tool()
 def write_itinerary():
     pass
+
+
+def run_server():
+    mcp.run()
 
 
 # if __name__ == "__main__":
