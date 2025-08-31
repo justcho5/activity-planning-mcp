@@ -82,3 +82,42 @@ def get_invalid_chars() -> List[str]:
         "+",
         "`",
     ]
+
+
+def format_coordinates(lat: float, lon: float) -> str:
+    """
+    Format coordinates as a string for APIs that expect "lat,lon" format.
+
+    Args:
+        lat: Latitude
+        lon: Longitude
+
+    Returns:
+        Formatted string "latitude,longitude"
+    """
+    return f"{lat},{lon}"
+
+
+def is_coordinates(location: str) -> bool:
+    """
+    Check if a location string is already in coordinate format.
+
+    Args:
+        location: Location string to check
+
+    Returns:
+        True if location is coordinates ("lat,lon"), False otherwise
+    """
+    try:
+        parts = location.split(",")
+        if len(parts) != 2:
+            return False
+
+        lat = float(parts[0].strip())
+        lng = float(parts[1].strip())
+
+        # Check valid coordinate ranges
+        return -90 <= lat <= 90 and -180 <= lng <= 180
+
+    except (ValueError, AttributeError):
+        return False

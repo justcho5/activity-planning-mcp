@@ -26,3 +26,40 @@ class Event(BaseModel):
     price_max: Optional[float] = Field(None, description="Maximum price of the event")
     category: Optional[str] = Field(None, description="Category of the event")
     genre: Optional[str] = Field(None, description="Genre of the event")
+
+
+class Place(BaseModel):
+    """Place information from Google Places."""
+
+    place_id: str = Field(..., description="Google Place ID")
+    name: str = Field(..., description="Place name")
+    address: str = Field(..., description="Place address")
+    latitude: Optional[float] = Field(None, description="Latitude coordinate")
+    longitude: Optional[float] = Field(None, description="Longitude coordinate")
+    rating: Optional[float] = Field(None, ge=0, le=5, description="Average rating")
+    user_ratings_total: int = Field(0, description="Total number of ratings")
+    price_level: Optional[int] = Field(
+        None, ge=0, le=4, description="Price level (0=free, 4=very expensive)"
+    )
+    types: list[str] = Field(default_factory=list, description="Place types/categories")
+    is_open_now: Optional[bool] = Field(
+        None, description="Whether place is currently open"
+    )
+    photo_reference: Optional[str] = Field(
+        None, description="Reference for place photo"
+    )
+
+
+class PlaceSearch(BaseModel):
+    """Place search parameters."""
+
+    location: str = Field(..., description="Location (address or coordinates)")
+    place_type: str = Field(..., description="Type of place to search")
+    radius: int = Field(5000, ge=1, le=50000, description="Search radius in meters")
+    keyword: Optional[str] = Field(None, description="Search keyword")
+    min_rating: Optional[float] = Field(
+        None, ge=1, le=5, description="Minimum rating filter"
+    )
+    price_level: Optional[int] = Field(
+        None, ge=0, le=4, description="Price level filter"
+    )
