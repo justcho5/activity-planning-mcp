@@ -8,7 +8,7 @@ import httpx
 
 async def fetch_events_by_date(
     city: str, start_date: str, end_date: str, keyword: Optional[str] = None
-):
+) -> List[Event]:
     city = validate_location(city)
     if keyword:
         keyword = validate_keyword(keyword)
@@ -26,9 +26,10 @@ async def search_events(search: EventSearch):
     url = "https://app.ticketmaster.com/discovery/v2/events.json"
 
     params = {
+        "apikey": get_settings().ticketmaster_api_key.get_secret_value(),
         "city": search.city,
-        "startDateTime": search.start_date,
-        "endDateTime": search.end_date,
+        "startDateTime": f"{search.start_date}T00:00:00Z",  # search.start_date,
+        "endDateTime": f"{search.end_date}T23:59:59Z",  # search.end_date,
         "size": search.size,
         "unit": search.unit,
         "radius": search.radius,
@@ -44,7 +45,7 @@ async def search_events(search: EventSearch):
             response.raise_for_status()
             data = response.json()
 
-            return data
+            return parse_events_response(data)
 
         except Exception as e:
             print(f"Error fetching events: {e}")

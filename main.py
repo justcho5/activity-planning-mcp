@@ -1,5 +1,8 @@
+from src.server import mcp
+
+
 def main():
-    print("Hello from activity-planning-mcp!")
+    mcp.run()
 
 
 if __name__ == "__main__":

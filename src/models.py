@@ -10,7 +10,7 @@ class EventSearch(BaseModel):
     end_date: str
     radius: Optional[int] = Field(50, ge=0, le=500, description="Radius in km")
     unit: str = Field("miles", description="Distance unit")
-    size: str = Field(20, ge=1, le=100, description="Number of events to return")
+    size: int = Field(20, ge=1, le=100, description="Number of events to return")
 
 
 class Event(BaseModel):

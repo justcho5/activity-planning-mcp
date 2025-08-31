@@ -41,16 +41,16 @@ def validate_keyword(keyword: str) -> str:
 def validate_start_end_dates(start_date: str, end_date: str):
 
     try:
-        start_date = datetime.strptime(start_date, "%Y-%m-%d")
-        end_date = datetime.strptime(end_date, "%Y-%m-%d")
+        sd = datetime.strptime(start_date, "%Y-%m-%d")
+        ed = datetime.strptime(end_date, "%Y-%m-%d")
 
     except ValueError:
         raise ValueError("Invalid date format. Use YYYY-MM-DD")
 
-    if start_date > end_date:
+    if sd > ed:
         raise ValueError("Start date must be before end date")
 
-    if start_date < datetime.now():
+    if sd < datetime.now():
         raise ValueError("Start date must be in the future")
 
     return start_date, end_date
