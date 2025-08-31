@@ -25,6 +25,10 @@ async def search_events(search: EventSearch):
 
     url = "https://app.ticketmaster.com/discovery/v2/events.json"
 
+    end_date = datetime.strptime(search.end_date, "%Y-%m-%d")
+    end_date = end_date + datetime.timedelta(days=1)  # Add 1 day to capture all events
+    search.end_date = end_date.strftime("%Y-%m-%d")
+
     params = {
         "apikey": get_settings().ticketmaster_api_key.get_secret_value(),
         "city": search.city,
