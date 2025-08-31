@@ -1,5 +1,7 @@
-from src.server import run_server
+from src.server import mcp
+
+server = mcp
 
 
-def main():
-    run_server()
+if __name__ == "__main__":
+    server.run()
