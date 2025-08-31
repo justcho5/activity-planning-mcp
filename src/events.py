@@ -1,6 +1,6 @@
 from src.config import get_settings
 from src.utils import validate_location, validate_keyword, validate_start_end_dates
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 from src.models import EventSearch, Event
 import httpx
@@ -26,7 +26,7 @@ async def search_events(search: EventSearch):
     url = "https://app.ticketmaster.com/discovery/v2/events.json"
 
     end_date = datetime.strptime(search.end_date, "%Y-%m-%d")
-    end_date = end_date + datetime.timedelta(days=1)  # Add 1 day to capture all events
+    end_date = end_date + timedelta(days=1)  # Add 1 day to capture all events
     search.end_date = end_date.strftime("%Y-%m-%d")
 
     params = {
