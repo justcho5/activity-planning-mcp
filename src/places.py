@@ -298,13 +298,11 @@ async def geocode_location(location: str) -> Tuple[float, float]:
 
     Raises:
         ValueError: If geocoding fails or no results found
-        httpx.HTTPError: For API communication errors
     """
     api_key = get_settings().google_places_api_key.get_secret_value()
 
     url = "https://maps.googleapis.com/maps/api/geocode/json"
     params = {"address": location, "key": api_key}
-    print(params)
 
     async with httpx.AsyncClient(timeout=10.0) as client:
         try:

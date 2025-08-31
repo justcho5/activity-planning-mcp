@@ -47,6 +47,25 @@ async def search_places(
     min_rating: Optional[float] = None,
     price_level: Optional[int] = None,
 ):
+    """
+    Search for places using Google Places API.
+
+    Args:
+        location (str): Location as "latitude,longitude" or address string
+        place_type (str): Type of place (restaurant, park, museum, hiking_area, etc.)
+        radius (int, optional): Search radius in meters (default 5000m = 5km)
+        keyword (Optional[str], optional): Optional keyword to refine search
+        min_rating (Optional[float], optional): Minimum rating filter (float 1.0-5.0)
+        price_level (Optional[int], optional): Price level filter (int 0-4, where 0=free, 4=very expensive)
+
+    Returns:
+        List of Place objects matching search criteria
+
+    Examples:
+        - Search for restaurants in San Francisco: location="San Francisco", place_type="restaurant"
+        - Search for hiking areas within a 10km radius of New York: location="New York", place_type="hiking_area", radius=10000
+
+    """
     try:
         if min_rating is not None:
             if isinstance(min_rating, str):
@@ -73,6 +92,16 @@ async def search_places(
 
 @mcp.tool()
 async def get_place_details(place_id: str):
+    """
+    Get detailed information about a specific place.
+
+    Args:
+        place_id (str): Google Place ID
+
+    Returns:
+        Detailed place information including hours, reviews, contact info
+
+    """
     try:
         place = await get_place_details_api(place_id)
         return place
@@ -84,6 +113,7 @@ async def get_place_details(place_id: str):
 @mcp.tool()
 def make_gcal_url(title: str, start_iso: str, end_iso: str, location: str = "") -> dict:
     """Generate a prefilled Google Calendar event creation URL (no OAuth required)."""
+
     base = "https://calendar.google.com/calendar/render?action=TEMPLATE"
     params = {
         "text": title,
