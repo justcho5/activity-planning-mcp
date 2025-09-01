@@ -47,10 +47,10 @@ def validate_start_end_dates(start_date: str, end_date: str):
     except ValueError:
         raise ValueError("Invalid date format. Use YYYY-MM-DD")
 
-    if sd > ed:
+    if sd >= ed:
         raise ValueError("Start date must be before end date")
 
-    if sd < datetime.now():
+    if sd <= datetime.now():
         raise ValueError("Start date must be in the future")
 
     return start_date, end_date
