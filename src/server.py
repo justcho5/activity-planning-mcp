@@ -87,7 +87,7 @@ async def search_places(
         return results
 
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": "Search places tool failed"}
 
 
 @mcp.tool()
@@ -107,7 +107,7 @@ async def get_place_details(place_id: str):
         return place
 
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": "Get place details tool failed"}
 
 
 @mcp.tool()

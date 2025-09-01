@@ -118,7 +118,7 @@ async def fetch_places_from_api(
         except httpx.TimeoutException:
             raise httpx.TimeoutException("Request timeout while fetching places")
         except Exception as e:
-            raise ValueError(f"Error fetching places: {e}")
+            raise {"error": f"Error fetching places"}
 
 
 def parse_places_response(data: Dict[str, Any]) -> List[Place]:

@@ -64,7 +64,7 @@ async def search_events(search: EventSearch):
             return parse_events_response(data)
 
         except Exception as e:
-            print(f"Error fetching events: {e}")
+            print(f"Error fetching events")
 
 
 def parse_events_response(data: Dict[str, Any]) -> List[Event]:
