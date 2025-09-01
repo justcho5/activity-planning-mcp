@@ -45,7 +45,7 @@ echo "GOOGLE_PLACES_API_KEY=your_google_places_key" >> .env
 
 The MCP server is deployed at: `https://sudden-aardvark.fastmcp.app/mcp`
 
-Add to your Claude configuration (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+Add to MCP client configuration:
 
 ```json
 {
@@ -83,9 +83,9 @@ fastmcp dev main.py
 ### How would you test the agent, what are the different failure scenarios, and what tools or methods would you use to manage them?
 
 1. **In-Memory Testing with FastMCP Client**
-   - Import your server object directly into tests
+   - Imports the server object directly into tests
+   - Test tool calls
    - No deployment or network overhead required
-   - Full debugging support with breakpoints
    - Instant test execution
 1. **Unit Tests**: 
    - Test individual functions with mocked API responses
@@ -102,16 +102,15 @@ fastmcp dev main.py
 ### What are the security considerations of your agent and what are potential ways to defend against them?
 
 **Current Implementation**:
--  API keys stored as environment variables using `pydantic.SecretStr`
--  Input validation for all user inputs
--  Special character filtering to prevent injection
+- API keys stored as environment variables using `pydantic.SecretStr`
+- Input validation for all user inputs
 - Opted to make gcal links instead of writing to Google calendar to mitigate security concerns around writing to external services.
 
 **Security Risks & Mitigations**:
 
 1. **API Key Exposure**:
    - Risk: Keys could leak through error messages or logs
-   - Mitigation: Use structured logging, sanitize all error outputs
+   - Mitigation: Use structured logging, sanitize all error outputs, need better error handling in general (future consideration)
 
 2. **Agent Authorization**:
    - Risk: Unauthorized access to MCP Server and tools
@@ -140,19 +139,6 @@ fastmcp dev main.py
    - Cache geocoding results (addresses rarely change)
    - Pre-fetch popular events and places
 
-**Performance Optimizations**:
-```python
-# Example: Parallel API calls
-async def fetch_activity_suggestions(location, date):
-    events_task = fetch_events_by_date(location, date, date)
-    restaurants_task = search_places(location, "restaurant")
-    attractions_task = search_places(location, "tourist_attraction")
-    
-    events, restaurants, attractions = await asyncio.gather(
-        events_task, restaurants_task, attractions_task
-    )
-    return combine_suggestions(events, restaurants, attractions)
-```
 
 ### Caveats & Gotchas
 
